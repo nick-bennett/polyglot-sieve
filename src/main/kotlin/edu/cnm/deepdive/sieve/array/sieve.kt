@@ -5,7 +5,7 @@ import kotlin.math.sqrt
 fun sieve(limit: Int): List<Int> {
     val primes = mutableListOf<Int>()
     if (limit >= 2) {
-        val candidates = Array(2) { false } + Array(limit - 1) { true }
+        val candidates = BooleanArray(2) { false } + BooleanArray(limit - 1) { true }
         for (factor in 2..sqrt(limit.toDouble()).toInt()) {
             if (candidates[factor]) {
                 for (multiple in (factor * factor)..limit step factor) {
@@ -23,5 +23,14 @@ fun sieve(limit: Int): List<Int> {
 }
 
 fun main(args: Array<String>) {
-    println(sieve(1_000_000))
+    val start = System.currentTimeMillis()
+    val upperBound = 1_000_000
+    val primes = sieve(upperBound)
+    val end = System.currentTimeMillis()
+    println(
+        """
+            Kotlin Sieve with BooleanArray and List<Int>: 
+            ${primes.size} primes found between 2 and $upperBound in ${end - start} ms.
+        """.trimIndent()
+    )
 }

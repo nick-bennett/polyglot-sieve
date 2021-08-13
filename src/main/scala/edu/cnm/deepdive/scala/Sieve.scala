@@ -1,4 +1,4 @@
-package edu.cnm.deepdive
+package edu.cnm.deepdive.scala
 
 import scala.annotation.tailrec
 import scala.collection.mutable
@@ -24,7 +24,14 @@ object Sieve {
   }
 
   def main(args: Array[String]): Unit = {
-    println(sieve(1_000_000))
+    val start = System.currentTimeMillis()
+    val upperBound = 1_000_000
+    val primes = sieve(upperBound)
+    val end = System.currentTimeMillis()
+    println(
+      s"""Kotlin Sieve with BooleanArray and List<Int>:
+         |${primes.size} primes found between 2 and $upperBound in ${end - start} ms.""".stripMargin
+    )
   }
 
 }

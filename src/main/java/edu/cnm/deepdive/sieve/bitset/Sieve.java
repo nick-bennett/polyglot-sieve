@@ -21,7 +21,13 @@ public class Sieve {
   }
 
   public static void main(String... args) {
-    System.out.println(Arrays.toString(sieve(1_000_000)));
+    int upperBound = 1_000_000;
+    long start = System.currentTimeMillis();
+    int[] primes = sieve(upperBound);
+    long end = System.currentTimeMillis();
+    System.out.printf("Java Sieve with BitSet and int[]:%n"
+            + "%1$,d primes found between 2 and %2$,d in %3$d ms.%n",
+        primes.length, upperBound, end - start);
   }
 
 }

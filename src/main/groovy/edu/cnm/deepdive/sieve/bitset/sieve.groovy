@@ -16,4 +16,13 @@ static List sieve(int limit) {
     }
 }
 
-println(sieve(1_000_000))
+def start = System.currentTimeMillis()
+def upperBound = 1_000_000
+def primes = sieve(upperBound)
+def end = System.currentTimeMillis()
+println(
+    """\
+        Groovy Sieve with Lists: 
+        ${primes.size()} primes found between 2 and $upperBound in ${end - start} ms.
+    """.stripIndent()
+)
