@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
     println(
         """
             Kotlin Sieve with BooleanArray and List<Int>: 
-            ${primes.size} primes found between 2 and $upperBound in ${end - start} ms.
+            ${primes.size} primes found between ${primes.first()} and ${primes.last()} in ${end - start} ms.
         """.trimIndent()
     )
 }

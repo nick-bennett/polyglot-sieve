@@ -1,28 +1,24 @@
 package edu.cnm.deepdive.sieve.bitset
 
-static List sieve(int limit) {
-    def primes = new BitSet(limit + 1)
-    primes[0..1] = false
-    primes[2..limit] = true
-    def prime = 2
+static def sieve(int limit) {
+    def candidates = new BitSet(limit + 1)
+    candidates[0..1] = false
+    candidates[2..limit] = true
+    def prime = candidates.nextSetBit(0)
     while (prime <= Math.sqrt(limit)) {
         ((prime**2)..limit).step(prime) {
-            primes[it] = false
+            candidates[it] = false
         }
-        prime = primes.nextSetBit(prime + 1)
+        prime = candidates.nextSetBit(prime + 1)
     }
-    (0..limit).findAll {
-        primes[it]
-    }
+    return candidates
 }
 
 def start = System.currentTimeMillis()
 def upperBound = 1_000_000
 def primes = sieve(upperBound)
 def end = System.currentTimeMillis()
-println(
-    """\
-        Groovy Sieve with Lists: 
-        ${primes.size()} primes found between 2 and $upperBound in ${end - start} ms.
-    """.stripIndent()
-)
+println("""\
+    Groovy Sieve with BitSet: 
+    ${primes.cardinality()} primes found between ${primes.nextSetBit(0)} and ${primes.previousSetBit(primes.size() - 1)} (inclusive) in ${end - start} ms.
+    """.stripIndent())

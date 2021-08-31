@@ -1,26 +1,26 @@
-package edu.cnm.deepdive.scala
+package edu.cnm.deepdive.scala.bitset
 
 import scala.annotation.tailrec
 import scala.collection.mutable
 
 object Sieve {
 
-  def sieve(limit: Int): mutable.Seq[Int] = {
-    val primes: mutable.Set[Int] = mutable.Set.empty ++ (2 to limit)
+  def sieve(limit: Int): mutable.BitSet = {
+    val candidates: mutable.BitSet = mutable.BitSet.empty ++ (2 to limit)
     val sqrtLimit = math.sqrt(limit).toInt
 
     @tailrec
     def prime(value: Int): Unit = {
       if (value <= sqrtLimit) {
-        if (primes contains value) {
-          primes --= (value * value to limit by value)
+        if (candidates contains value) {
+          candidates --= (value * value to limit by value)
         }
         prime(value + 1)
       }
     }
 
     prime(2)
-    (mutable.Seq.empty ++ primes).sorted
+    candidates
   }
 
   def main(args: Array[String]): Unit = {
@@ -29,8 +29,8 @@ object Sieve {
     val primes = sieve(upperBound)
     val end = System.currentTimeMillis()
     println(
-      s"""Kotlin Sieve with BooleanArray and List<Int>:
-         |${primes.size} primes found between 2 and $upperBound in ${end - start} ms.""".stripMargin
+      s"""Scala Sieve with BitSet and Seq<Int>:
+         |${primes.size} primes found between ${primes.firstKey} and ${primes.lastKey} (inclusive) in ${end - start} ms.""".stripMargin
     )
   }
 
